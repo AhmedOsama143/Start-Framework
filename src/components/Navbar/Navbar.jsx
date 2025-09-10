@@ -2,7 +2,12 @@ import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import "./Navbar.css";
 
+// redux
+import { useSelector } from "react-redux";
+
 export default function Navbar() {
+  const totalCount = useSelector((state) => state.cart.totalCount);
+
   return (
     <nav
       className="navbar navbar-expand-lg position-fixed top-0 start-0 w-100 p-3"
@@ -10,7 +15,7 @@ export default function Navbar() {
     >
       <div className="container-fluid px-5">
         <Link className="navbar-brand text-white fw-bold fs-3" to="/">
-          Start Framework
+          API React Project
         </Link>
 
         <button
@@ -29,7 +34,19 @@ export default function Navbar() {
           className="collapse navbar-collapse justify-content-end"
           id="mainNavbar"
         >
-          <ul className="navbar-nav mb-2 mb-lg-0">
+          <ul className="navbar-nav mb-2 mb-lg-0 align-items-center">
+            <li className="nav-item mx-2">
+              <NavLink
+                to="/home"
+                className={({ isActive }) =>
+                  isActive
+                    ? "nav-link active text-uppercase fw-bold"
+                    : "nav-link text-white text-uppercase fw-bold"
+                }
+              >
+                Home
+              </NavLink>
+            </li>
             <li className="nav-item mx-2">
               <NavLink
                 to="/about"
@@ -51,7 +68,7 @@ export default function Navbar() {
                     : "nav-link text-white text-uppercase fw-bold"
                 }
               >
-                Portfolio
+                Products
               </NavLink>
             </li>
             <li className="nav-item mx-2">
@@ -65,6 +82,13 @@ export default function Navbar() {
               >
                 Contact
               </NavLink>
+            </li>
+
+            <li className="nav-item mx-3">
+              <span className="text-white fw-bold">
+                <i className="fa-solid fa-cart-shopping me-2"></i>
+                {totalCount}
+              </span>
             </li>
           </ul>
         </div>

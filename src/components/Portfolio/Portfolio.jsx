@@ -1,21 +1,36 @@
-import React, { useState } from "react";
-import port1 from "../../assets/imgs/poert1.png";
-import port2 from "../../assets/imgs/port2.png";
-import port3 from "../../assets/imgs/port3.png";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Portfolio.css";
+import { useDispatch, useSelector } from "react-redux";
+import { increment, decrement } from "../../cartSlice";
 
 export default function Portfolio() {
+  const [products, setProducts] = useState([]);
   const [previewSrc, setPreviewSrc] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  function previewImg(src) {
-    setPreviewSrc(src);
-  }
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("https://fakestoreapi.com/products");
+        const data = await res.json();
+        setProducts(data);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   function closeImg() {
     setPreviewSrc(null);
   }
-
-  const images = [port1, port2, port3, port1, port2, port3];
 
   return (
     <section
@@ -25,7 +40,7 @@ export default function Portfolio() {
       <div className="container mt-5">
         <div className="title mt-5">
           <h1 className="text-center display-6 fw-bold text-color">
-            PORTFOLIO COMPONENT
+            Many products
           </h1>
 
           <div className="star-container mt-3 mb-3 d-flex justify-content-center align-items-center">
@@ -35,25 +50,52 @@ export default function Portfolio() {
           </div>
         </div>
 
-        <div className="row g-4 mt-3">
-          {images.map((imgSrc, index) => (
-            <div key={index} className="col-md-6 col-lg-4">
-              <div
-                className="card overflow-hidden rounded-3 position-relative"
-                onClick={() => previewImg(imgSrc)}
-              >
-                <img
-                  src={imgSrc}
-                  className="img-fluid"
-                  alt={`portfolio-${index}`}
-                />
-                <div className="overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                  <i className="fa fa-solid fa-plus fa-5x text-white"></i>
+        {loading ? (
+          <h3 className="text-center text-muted mt-5">Loading...</h3>
+        ) : (
+          <div className="row g-4 mt-3">
+            {products.map((product) => (
+              <div key={product.id} className="col-md-6 col-lg-4">
+                <div className="card overflow-hidden rounded-3 position-relative">
+                  <img
+                    src={product.image}
+                    className="product-img"
+                    alt={product.title}
+                  />
+                  <div className="p-3 text-center">
+                    <h5>{product.title}</h5>
+                    <p className="text-muted">${product.price}</p>
+
+                    <div className="d-flex justify-content-center align-items-center gap-2 my-2">
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={() => dispatch(decrement(product.id))}
+                      >
+                        -
+                      </button>
+                      <span>
+                        {cartItems[product.id] ? cartItems[product.id] : 0}
+                      </span>
+                      <button
+                        className="btn btn-outline-success"
+                        onClick={() => dispatch(increment(product.id))}
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <Link
+                      to={`/product/${product.id}`}
+                      className="btn btn-primary mt-2"
+                    >
+                      Show More
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {previewSrc && (
