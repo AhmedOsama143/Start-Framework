@@ -1,25 +1,29 @@
 import React from "react";
-import avatar from "../../assets/imgs/avataaars.png";
+import { useNavigate } from "react-router-dom";
+import HeroImage from "../../assets/clark-street-mercantile-P3pI6xzovu0-unsplash.jpg";
+import Button from "../Button/Button";
 import "./Hero.css";
-export default function Hero() {
-  return (
-    <section
-      id="home"
-      className="min-vh-100 d-flex justify-content-center align-items-center"
-    >
-      <div className="container text-center p-3 mt-5">
-        <img src={avatar} alt="avatar" />
-        <h1 className="text-white display-6 fw-bold mt-4">2nd project React</h1>
 
-        <div className="star-container mt-3 mb-3 d-flex justify-content-center align-items-center">
-          <div id="line"></div>
-          <i className="fa fa-solid fa-star text-white"></i>
-          <div id="line"></div>
+export default function Hero() {
+  const navigate = useNavigate();
+
+  return (
+    <section className="hero ">
+      <div className="hero-container">
+        <div className="hero-left">
+          <h1>For All Your Fashion Needs, Your Style.</h1>
+          <p>
+            Cukur Fashion is your go-to online destination for the latest trends
+            in clothing and accessories. We bring you stylish, high-quality
+            outfits that fit every occasion and personality. Upgrading your
+            wardrobe has never been easier.
+          </p>
+          <Button text="About Us" onClick={() => navigate("/about")} />
         </div>
 
-        <p className="text-white mb-0">
-          Graphic Artist - Web Designer - Illustrator - Ahmed Osama Kholief
-        </p>
+        <div className="hero-right">
+          <img src={HeroImage} alt="Hero" />
+        </div>
       </div>
     </section>
   );

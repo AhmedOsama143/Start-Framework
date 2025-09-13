@@ -14,11 +14,16 @@
   margin: 0 10px;
 }
 
+#contact .input-container {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
 #contact .input-label {
   position: absolute;
-  top: 0;
+  top: 12px;
   left: 0;
-  padding: 6px 12px;
+  padding: 0 12px;
   font-size: 16px;
   color: #777;
   pointer-events: none;
@@ -26,38 +31,23 @@
   transition: all 0.3s ease;
 }
 
-#contact .input-container {
-  position: relative;
+#contact input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-bottom: 2px solid #ccc;
+  background: transparent;
 }
 
 #contact input:focus {
   outline: none;
   box-shadow: none;
+  border-bottom: 2px solid #2c3e50;
 }
 
-#contact #userName:focus + label[for="userName"] {
-  top: -20px;
-  font-size: 12px;
-  color: #2c3e50;
-  opacity: 1;
-}
-
-#contact #userAge:focus + label[for="userAge"] {
-  top: -20px;
-  font-size: 12px;
-  color: #2c3e50;
-  opacity: 1;
-}
-
-#contact #userEmail:focus + label[for="userEmail"] {
-  top: -20px;
-  font-size: 12px;
-  color: #2c3e50;
-  opacity: 1;
-}
-
-#contact #userPass:focus + label[for="userPass"] {
-  top: -20px;
+#contact input:focus + .input-label,
+#contact input:not(:placeholder-shown) + .input-label {
+  top: -12px;
   font-size: 12px;
   color: #2c3e50;
   opacity: 1;

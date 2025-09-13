@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Portfolio.css";
-import { useDispatch, useSelector } from "react-redux";
-import { increment, decrement } from "../../cartSlice";
 
 export default function Portfolio() {
   const [products, setProducts] = useState([]);
   const [previewSrc, setPreviewSrc] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -65,24 +60,6 @@ export default function Portfolio() {
                   <div className="p-3 text-center">
                     <h5>{product.title}</h5>
                     <p className="text-muted">${product.price}</p>
-
-                    <div className="d-flex justify-content-center align-items-center gap-2 my-2">
-                      <button
-                        className="btn btn-outline-danger"
-                        onClick={() => dispatch(decrement(product.id))}
-                      >
-                        -
-                      </button>
-                      <span>
-                        {cartItems[product.id] ? cartItems[product.id] : 0}
-                      </span>
-                      <button
-                        className="btn btn-outline-success"
-                        onClick={() => dispatch(increment(product.id))}
-                      >
-                        +
-                      </button>
-                    </div>
 
                     <Link
                       to={`/product/${product.id}`}

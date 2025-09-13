@@ -15,7 +15,7 @@ export default function Navbar() {
     >
       <div className="container-fluid px-5">
         <Link className="navbar-brand text-white fw-bold fs-3" to="/">
-          API React Project
+          Cukur E-Commerce
         </Link>
 
         <button
@@ -85,10 +85,13 @@ export default function Navbar() {
             </li>
 
             <li className="nav-item mx-3">
-              <span className="text-white fw-bold">
+              <Link
+                to="/cart"
+                className="text-white fw-bold text-decoration-none"
+              >
                 <i className="fa-solid fa-cart-shopping me-2"></i>
                 {totalCount}
-              </span>
+              </Link>
             </li>
           </ul>
         </div>
